@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#c8102e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Spanisch Basics</title>
+<style>
+:root{
+  --bg:#faf7f2; --surface:#ffffff; --surface-2:#f1ece4; --text:#1d1a16; --muted:#6b645a;
+  --line:#e4ddd2; --accent:#c8102e; --accent-ink:#ffffff; --accent-soft:#fbe3e6;
+  --gold:#f1bf00; --ok:#1f8a4c; --ok-soft:#dff3e7; --bad:#c8102e; --bad-soft:#fbe3e6;
+  --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 16px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15130f; --surface:#1f1c17; --surface-2:#2a261f; --text:#f3eee6; --muted:#a59d90;
+    --line:#38322a; --accent:#ff5468; --accent-ink:#1a0006; --accent-soft:#3a1a1f;
+    --gold:#f5cc33; --ok:#4cc77f; --ok-soft:#183324; --bad:#ff5468; --bad-soft:#3a1a1f;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15130f; --surface:#1f1c17; --surface-2:#2a261f; --text:#f3eee6; --muted:#a59d90;
+  --line:#38322a; --accent:#ff5468; --accent-ink:#1a0006; --accent-soft:#3a1a1f;
+  --gold:#f5cc33; --ok:#4cc77f; --ok-soft:#183324; --bad:#ff5468; --bad-soft:#3a1a1f;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 4px 16px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  -webkit-tap-highlight-color:transparent;min-height:100vh;overflow-x:hidden}
+button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px calc(96px + env(safe-area-inset-bottom))}
+header{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(10px + env(safe-area-inset-top)) 0 10px;
+  display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line);margin:0 -16px 14px;padding-left:16px;padding-right:16px}
+.flag{width:28px;height:20px;border-radius:4px;background:linear-gradient(var(--accent) 0 25%,var(--gold) 25% 75%,var(--accent) 75%);flex:none}
+h1{font-size:18px;margin:0;flex:1;letter-spacing:-.01em}
+.dir{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 12px;font-weight:600;font-size:14px;white-space:nowrap}
+.dir b{color:var(--accent)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 10px;margin:0 -16px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 13px;font-size:14px;white-space:nowrap}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.row{display:flex;gap:8px;align-items:center}
+.between{justify-content:space-between}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:10px;padding:3px}
+.seg button{border:0;background:transparent;padding:6px 12px;border-radius:8px;font-size:14px;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--text);font-weight:600;box-shadow:var(--shadow)}
+.muted{color:var(--muted);font-size:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.flash{min-height:250px;margin:12px 0;padding:24px 20px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;position:relative;user-select:none}
+.flash .lang{position:absolute;top:12px;left:14px;font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.flash .q{font-size:26px;font-weight:650;line-height:1.25;letter-spacing:-.01em}
+.flash .a{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);width:100%;font-size:22px;color:var(--accent);font-weight:600}
+.flash .tap{margin-top:18px;font-size:13px;color:var(--muted)}
+.note{font-size:13px;color:var(--muted);margin-top:8px;font-weight:400}
+.speak{border:0;background:var(--accent-soft);color:var(--accent);width:42px;height:42px;border-radius:50%;display:inline-grid;place-items:center;flex:none}
+.speak svg{width:20px;height:20px}
+.flash .speak{position:absolute;top:10px;right:10px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 16px;font-weight:600;flex:1;min-height:52px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.ok{background:var(--ok-soft);border-color:transparent;color:var(--ok)}
+.btn.bad{background:var(--bad-soft);border-color:transparent;color:var(--bad)}
+.btn.small{flex:none;min-height:40px;padding:8px 12px;font-size:14px;border-radius:10px}
+.btn:disabled{opacity:.45}
+.list{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.item{display:flex;align-items:center;gap:12px;padding:12px 12px 12px 14px}
+.item .t{flex:1;min-width:0}
+.item .es{font-weight:600}
+.item .de{color:var(--muted);font-size:14px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);flex:none}
+.dot.b1,.dot.b2{background:var(--gold)} .dot.b3,.dot.b4,.dot.b5{background:var(--ok)}
+.sec{margin:18px 0 8px;font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.opt{text-align:left;border:1.5px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 16px;font-size:17px;min-height:54px}
+.opt.right{border-color:var(--ok);background:var(--ok-soft);color:var(--ok);font-weight:600}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft);color:var(--bad)}
+.bar{height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden;margin:4px 0 10px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px;transition:width .3s}
+input.answer{width:100%;font:inherit;font-size:18px;padding:14px 16px;border-radius:14px;border:1.5px solid var(--line);background:var(--surface);color:var(--text);margin-top:14px;outline:none}
+input.answer:focus{border-color:var(--accent)}
+.keys{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.keys button{border:1px solid var(--line);background:var(--surface-2);border-radius:8px;min-width:38px;height:38px;font-size:16px}
+.fb{margin-top:14px;padding:14px 16px;border-radius:14px;font-weight:500}
+.fb.ok{background:var(--ok-soft);color:var(--ok)} .fb.bad{background:var(--bad-soft);color:var(--bad)}
+.fb .sol{display:block;color:var(--text);font-weight:650;margin-top:4px;font-size:17px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:6px 0 4px}
+.stat{padding:12px;text-align:center}
+.stat b{display:block;font-size:24px;letter-spacing:-.02em}
+.stat span{font-size:12px;color:var(--muted)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin-bottom:6px}
+.field .seg{display:flex}
+.field .seg button{flex:1}
+select{width:100%;font:inherit;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+.big{font-size:56px;font-weight:750;text-align:center;letter-spacing:-.03em;margin:8px 0 0}
+nav{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--surface);border-top:1px solid var(--line);
+  display:flex;justify-content:center;padding:6px 8px calc(6px + env(safe-area-inset-bottom))}
+nav .in{display:flex;max-width:560px;width:100%}
+nav button{flex:1;border:0;background:transparent;padding:6px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--muted);border-radius:12px}
+nav button svg{width:24px;height:24px}
+nav button.on{color:var(--accent);font-weight:700}
+.hide{display:none!important}
+.reset{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:13px;padding:8px 0;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="flag" aria-hidden="true"></div>
+    <h1>Spanisch Basics</h1>
+    <button class="dir" id="dirBtn" aria-label="Richtung wechseln"></button>
+  </header>
+  <main id="app"></main>
+</div>
+
+<nav>
+  <div class="in">
+    <button data-tab="phrases"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Sätze</button>
+    <button data-tab="words"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h4M7 14h10"/></svg>Wörter</button>
+    <button data-tab="learn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 8l10 5 10-5-10-5z"/><path d="M6 10.5V16c2 2 10 2 12 0v-5.5"/></svg>Lernen</button>
+  </div>
+</nav>
+
+<script>
+/* ---------- Inhalte: [Deutsch, Spanisch, Hinweis?] ---------- */
+const PHRASES = {
+  "Begrüßung": [
+    ["Hallo!","¡Hola!"],
+    ["Guten Morgen!","¡Buenos días!"],
+    ["Guten Tag! (nachmittags)","¡Buenas tardes!"],
+    ["Guten Abend! / Gute Nacht!","¡Buenas noches!"],
+    ["Wie geht's?","¿Qué tal?"],
+    ["Wie geht es dir?","¿Cómo estás?"],
+    ["Mir geht es gut, danke.","Estoy bien, gracias."],
+    ["Und dir?","¿Y tú?"],
+    ["Wie heißt du?","¿Cómo te llamas?"],
+    ["Ich heiße …","Me llamo …"],
+    ["Freut mich!","¡Mucho gusto!"],
+    ["Woher kommst du?","¿De dónde eres?"],
+    ["Ich komme aus Deutschland.","Soy de Alemania."],
+    ["Tschüss!","¡Adiós!"],
+    ["Bis später!","¡Hasta luego!"],
+    ["Bis morgen!","¡Hasta mañana!"]
+  ],
+  "Höflichkeit": [
+    ["Bitte.","Por favor.","beim Bitten"],
+    ["Danke!","¡Gracias!"],
+    ["Vielen Dank!","¡Muchas gracias!"],
+    ["Gern geschehen.","De nada."],
+    ["Entschuldigung!","¡Perdón!"],
+    ["Entschuldigen Sie (Aufmerksamkeit)","Disculpe."],
+    ["Es tut mir leid.","Lo siento."],
+    ["Kein Problem.","No pasa nada."],
+    ["Natürlich!","¡Claro!"]
+  ],
+  "Verstehen": [
+    ["Ich spreche wenig Spanisch.","Hablo poco español."],
+    ["Ich verstehe nicht.","No entiendo."],
+    ["Kannst du das wiederholen?","¿Puedes repetirlo?"],
+    ["Langsamer, bitte.","Más despacio, por favor."],
+    ["Sprechen Sie Englisch?","¿Habla inglés?"],
+    ["Was bedeutet das?","¿Qué significa eso?"],
+    ["Wie sagt man … auf Spanisch?","¿Cómo se dice … en español?"],
+    ["Ich weiß nicht.","No sé."]
+  ],
+  "Restaurant": [
+    ["Einen Tisch für zwei, bitte.","Una mesa para dos, por favor."],
+    ["Die Speisekarte, bitte.","La carta, por favor."],
+    ["Ich hätte gern …","Quisiera …"],
+    ["Einen Milchkaffee, bitte.","Un café con leche, por favor."],
+    ["Ein Wasser ohne Kohlensäure.","Un agua sin gas."],
+    ["Ein Bier, bitte.","Una cerveza, por favor."],
+    ["Was empfehlen Sie?","¿Qué me recomienda?"],
+    ["Ich bin Vegetarier.","Soy vegetariano.","Frau: vegetariana"],
+    ["Die Rechnung, bitte.","La cuenta, por favor."],
+    ["Kann ich mit Karte zahlen?","¿Puedo pagar con tarjeta?"],
+    ["Es war sehr lecker.","Estaba muy rico."],
+    ["Prost!","¡Salud!"],
+    ["Wo ist die Toilette?","¿Dónde está el baño?"]
+  ],
+  "Einkaufen": [
+    ["Wie viel kostet das?","¿Cuánto cuesta?"],
+    ["Das ist zu teuer.","Es demasiado caro."],
+    ["Ich schaue nur.","Solo estoy mirando."],
+    ["Haben Sie …?","¿Tiene …?"],
+    ["Ich nehme es.","Me lo llevo."],
+    ["Eine Tüte, bitte.","Una bolsa, por favor."],
+    ["Wann öffnen Sie?","¿A qué hora abren?"]
+  ],
+  "Unterwegs": [
+    ["Wo ist …?","¿Dónde está …?"],
+    ["Wo ist der Bahnhof?","¿Dónde está la estación de tren?"],
+    ["Wie komme ich zum Strand?","¿Cómo llego a la playa?"],
+    ["Ist es weit?","¿Está lejos?"],
+    ["Nach links.","A la izquierda."],
+    ["Nach rechts.","A la derecha."],
+    ["Geradeaus.","Todo recto."],
+    ["Ein Ticket nach Madrid, bitte.","Un billete a Madrid, por favor.","Lateinamerika: un boleto"],
+    ["Wann fährt der Bus ab?","¿A qué hora sale el autobús?"],
+    ["Ich habe mich verlaufen.","Me he perdido."],
+    ["Zu dieser Adresse, bitte.","A esta dirección, por favor."]
+  ],
+  "Hotel": [
+    ["Ich habe eine Reservierung.","Tengo una reserva."],
+    ["Haben Sie ein Zimmer frei?","¿Tiene una habitación libre?"],
+    ["Für zwei Nächte.","Para dos noches."],
+    ["Ist das Frühstück inklusive?","¿El desayuno está incluido?"],
+    ["Wie ist das WLAN-Passwort?","¿Cuál es la contraseña del wifi?"]
+  ],
+  "Notfall": [
+    ["Hilfe!","¡Socorro!"],
+    ["Ich brauche einen Arzt.","Necesito un médico."],
+    ["Rufen Sie einen Krankenwagen!","¡Llame a una ambulancia!"],
+    ["Wo ist die Apotheke?","¿Dónde está la farmacia?"],
+    ["Mir geht es nicht gut.","Me encuentro mal."],
+    ["Ich habe meinen Pass verloren.","He perdido mi pasaporte."]
+  ],
+  "Small Talk": [
+    ["Wie spät ist es?","¿Qué hora es?"],
+    ["Es ist sehr schön hier.","Es muy bonito aquí."],
+    ["Ich mache Urlaub.","Estoy de vacaciones."],
+    ["Was machst du beruflich?","¿A qué te dedicas?"],
+    ["Ich mag …","Me gusta …"],
+    ["Gute Reise!","¡Buen viaje!"],
+    ["Viel Glück!","¡Buena suerte!"]
+  ]
+};
+
+const WORDS = {
+  "Grundwörter": [
+    ["ja","sí"],["nein","no"],["und","y"],["oder","o"],["mit","con"],["ohne","sin"],
+    ["gut","bueno"],["schlecht","malo"],["groß","grande"],["klein","pequeño"],
+    ["viel","mucho"],["wenig","poco"],["sehr","muy"],["auch","también"],
+    ["hier","aquí"],["dort","allí"],["jetzt","ahora"],["heute","hoy"],["morgen","mañana"],["gestern","ayer"]
+  ],
+  "Zahlen": [
+    ["eins","uno"],["zwei","dos"],["drei","tres"],["vier","cuatro"],["fünf","cinco"],
+    ["sechs","seis"],["sieben","siete"],["acht","ocho"],["neun","nueve"],["zehn","diez"],
+    ["zwanzig","veinte"],["hundert","cien"]
+  ],
+  "Fragewörter": [
+    ["was","qué"],["wer","quién"],["wo","dónde"],["wann","cuándo"],["wie","cómo"],
+    ["warum","por qué"],["wie viel","cuánto"],["welche/r","cuál"]
+  ],
+  "Essen & Trinken": [
+    ["das Wasser","el agua"],["das Brot","el pan"],["der Kaffee","el café"],["der Wein","el vino"],
+    ["die Milch","la leche"],["das Fleisch","la carne"],["der Fisch","el pescado","als Speise"],["das Hähnchen","el pollo"],
+    ["der Käse","el queso"],["das Obst","la fruta"],["das Gemüse","la verdura"],["der Reis","el arroz"],
+    ["das Ei","el huevo"],["die Kartoffel","la patata","Lateinamerika: la papa"],["das Frühstück","el desayuno"],
+    ["das Mittagessen","la comida"],["das Abendessen","la cena"],["der Zucker","el azúcar"],["das Salz","la sal"]
+  ],
+  "Orte": [
+    ["das Haus","la casa"],["die Stadt","la ciudad"],["der Strand","la playa"],["der Flughafen","el aeropuerto"],
+    ["der Bahnhof","la estación"],["das Hotel","el hotel"],["das Restaurant","el restaurante"],
+    ["der Supermarkt","el supermercado"],["die Bank","el banco"],["die Straße","la calle"],
+    ["der Markt","el mercado"],["die Kirche","la iglesia"],["das Krankenhaus","el hospital"]
+  ],
+  "Zeit": [
+    ["Montag","lunes"],["Dienstag","martes"],["Mittwoch","miércoles"],["Donnerstag","jueves"],
+    ["Freitag","viernes"],["Samstag","sábado"],["Sonntag","domingo"],
+    ["der Tag","el día"],["die Woche","la semana"],["der Monat","el mes"],["das Jahr","el año"],["die Stunde","la hora"]
+  ],
+  "Menschen": [
+    ["der Mann","el hombre"],["die Frau","la mujer"],["das Kind","el niño"],["der Freund","el amigo"],
+    ["die Freundin","la amiga"],["die Familie","la familia"],["die Mutter","la madre"],["der Vater","el padre"],
+    ["der Bruder","el hermano"],["die Schwester","la hermana"]
+  ],
+  "Verben": [
+    ["sein (dauerhaft)","ser","soy, eres, es …"],["sein (Zustand, Ort)","estar","estoy, estás, está …"],
+    ["haben","tener"],["gehen","ir"],["kommen","venir"],["essen","comer"],["trinken","beber"],
+    ["sprechen","hablar"],["verstehen","entender"],["wollen","querer"],["können","poder"],
+    ["brauchen","necesitar"],["kaufen","comprar"],["bezahlen","pagar"],["schlafen","dormir"],
+    ["sehen","ver"],["machen","hacer"],["wissen","saber"]
+  ],
+  "Farben": [
+    ["rot","rojo"],["blau","azul"],["grün","verde"],["gelb","amarillo"],["schwarz","negro"],["weiß","blanco"]
+  ]
+};
+
+/* ---------- Daten aufbereiten ---------- */
+const ITEMS = [];
+function load(src, kind){
+  for (const [cat, rows] of Object.entries(src)){
+    for (const [de, es, note] of rows){
+      ITEMS.push({id: kind + ":" + es, kind, cat, de, es, note: note || ""});
+    }
+  }
+}
+load(PHRASES, "phrases"); load(WORDS, "words");
+
+/* ---------- Speicher (nur lokal, robust) ---------- */
+const KEY = "esger-v1";
+let store = {dir: "de-es", prog: {}};
+try { const s = JSON.parse(localStorage.getItem(KEY) || "null"); if (s) store = Object.assign(store, s); } catch(e){}
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(store)); } catch(e){} }
+function box(id){ return (store.prog[id] && store.prog[id].b) || 0; }
+function seen(id){ return !!store.prog[id]; }
+function mark(id, ok){
+  const p = store.prog[id] || {b: 0};
+  p.b = ok ? Math.min(5, p.b + 1) : 0;
+  store.prog[id] = p; save();
+}
+
+/* ---------- Aussprache ---------- */
+let esVoice = null;
+function pickVoice(){
+  if (!("speechSynthesis" in window)) return;
+  const vs = speechSynthesis.getVoices();
+  esVoice = vs.find(v => v.lang === "es-ES") || vs.find(v => /^es/i.test(v.lang)) || null;
+}
+if ("speechSynthesis" in window){ pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
+function speak(text){
+  if (!("speechSynthesis" in window)) return;
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text.replace(/…/g, ""));
+    u.lang = "es-ES"; u.rate = 0.85; if (esVoice) u.voice = esVoice;
+    speechSynthesis.speak(u);
+  } catch(e){}
+}
+const SPK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg>';
+
+/* ---------- Helfer ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const deFirst = () => store.dir === "de-es";
+const promptOf = it => deFirst() ? it.de : it.es;
+const answerOf = it => deFirst() ? it.es : it.de;
+
+function norm(s, keepAccents){
+  s = s.toLowerCase().replace(/\(.*?\)/g, " ").replace(/[¿¡?!.,;:…"'«»]/g, " ");
+  if (!keepAccents) s = s.normalize("NFD").replace(/[̀-ͯ]/g, "");
+  s = s.replace(/\s+/g, " ").trim();
+  return s;
+}
+const ARTICLES = /^(der|die|das|ein|eine|el|la|los|las|un|una) /;
+function variants(ans, keep){
+  const out = new Set();
+  for (const part of ans.split("/")){
+    const n = norm(part, keep); if (!n) continue;
+    out.add(n); out.add(n.replace(ARTICLES, ""));
+  }
+  return out;
+}
+function check(input, ans){
+  const a = norm(input, true), b = norm(input, false);
+  if (!b) return "empty";
+  if (variants(ans, true).has(a) || variants(ans, true).has(a.replace(ARTICLES, ""))) return "ok";
+  if (variants(ans, false).has(b) || variants(ans, false).has(b.replace(ARTICLES, ""))) return "accent";
+  return "bad";
+}
+
+/* ---------- Zustand ---------- */
+const view = {
+  tab: "phrases",
+  browse: { phrases: {cat: "Alle", mode: "cards", i: 0, flipped: false, order: null},
+            words:   {cat: "Alle", mode: "cards", i: 0, flipped: false, order: null} },
+  learn: { src: "all", cat: "Alle", type: "mix", round: null }
+};
+
+function itemsFor(kind, cat){
+  return ITEMS.filter(it => (kind === "all" || it.kind === kind) && (cat === "Alle" || it.cat === cat));
+}
+function catsFor(kind){
+  if (kind === "phrases") return Object.keys(PHRASES);
+  if (kind === "words") return Object.keys(WORDS);
+  return [];
+}
+
+/* ---------- Render: Sätze / Wörter ---------- */
+function renderBrowse(kind){
+  const st = view.browse[kind];
+  const list = itemsFor(kind, st.cat);
+  if (!st.order || st.order.length !== list.length) { st.order = list.map((_, i) => i); }
+  const cats = ["Alle", ...catsFor(kind)];
+  let h = `<div class="chips">${cats.map(c => `<button class="chip ${c === st.cat ? "on" : ""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("")}</div>
+  <div class="row between">
+    <div class="seg"><button data-mode="cards" class="${st.mode === "cards" ? "on" : ""}">Karten</button><button data-mode="list" class="${st.mode === "list" ? "on" : ""}">Liste</button></div>
+    ${st.mode === "cards" ? `<button class="btn small" id="shuf">Mischen</button>` : `<span class="muted">${list.length} Einträge</span>`}
+  </div>`;
+
+  if (st.mode === "list"){
+    h += `<div class="list" style="margin-top:12px">` + list.map(it => `
+      <div class="card item"><span class="dot b${box(it.id)}"></span>
+        <div class="t"><div class="es">${esc(it.es)}</div><div class="de">${esc(it.de)}${it.note ? " · " + esc(it.note) : ""}</div></div>
+        <button class="speak" data-say="${esc(it.es)}" aria-label="Anhören">${SPK}</button></div>`).join("") + `</div>`;
+  } else {
+    if (st.i >= list.length) st.i = 0;
+    const it = list[st.order[st.i]];
+    const pLang = deFirst() ? "DEUTSCH" : "ESPAÑOL";
+    h += `<div class="card flash" id="flash">
+      <span class="lang">${pLang}</span>
+      <button class="speak" data-say="${esc(it.es)}" aria-label="Anhören">${SPK}</button>
+      <div class="q">${esc(promptOf(it))}</div>
+      ${st.flipped ? `<div class="a">${esc(answerOf(it))}${it.note ? `<div class="note">${esc(it.note)}</div>` : ""}</div>` : `<div class="tap">Tippen zum Aufdecken</div>`}
+    </div>
+    <div class="row between" style="margin-bottom:10px">
+      <button class="btn small" id="prev">‹ Zurück</button>
+      <span class="muted">${st.i + 1} / ${list.length}</span>
+      <button class="btn small" id="next">Weiter ›</button>
+    </div>
+    <div class="row">
+      <button class="btn bad" id="again" ${st.flipped ? "" : "disabled"}>Nochmal</button>
+      <button class="btn ok" id="knew" ${st.flipped ? "" : "disabled"}>Gewusst ✓</button>
+    </div>`;
+  }
+  $("#app").innerHTML = h;
+
+  document.querySelectorAll("[data-cat]").forEach(b => b.onclick = () => { st.cat = b.dataset.cat; st.i = 0; st.flipped = false; st.order = null; render(); });
+  document.querySelectorAll("[data-mode]").forEach(b => b.onclick = () => { st.mode = b.dataset.mode; render(); });
+  bindSpeak();
+  if (st.mode === "cards"){
+    const go = d => { st.i = (st.i + d + list.length) % list.length; st.flipped = false; render(); };
+    $("#flash").onclick = e => {
+      if (e.target.closest(".speak")) return;
+      st.flipped = !st.flipped; render();
+      if (st.flipped && deFirst()) speak(list[st.order[st.i]].es);
+    };
+    $("#prev").onclick = () => go(-1);
+    $("#next").onclick = () => go(1);
+    $("#shuf").onclick = () => { st.order = shuffle(list.map((_, i) => i)); st.i = 0; st.flipped = false; render(); };
+    $("#again").onclick = () => { mark(list[st.order[st.i]].id, false); go(1); };
+    $("#knew").onclick = () => { mark(list[st.order[st.i]].id, true); go(1); };
+  }
+}
+
+function bindSpeak(){
+  document.querySelectorAll("[data-say]").forEach(b => b.onclick = e => { e.stopPropagation(); speak(b.dataset.say); });
+}
+
+/* ---------- Render: Lernmodus ---------- */
+function renderLearn(){
+  const L = view.learn;
+  if (L.round) return L.round.done ? renderResult() : renderQuestion();
+
+  const pool = itemsFor(L.src, L.cat);
+  const known = pool.filter(it => box(it.id) >= 3).length;
+  const learning = pool.filter(it => seen(it.id) && box(it.id) < 3).length;
+  const cats = catsFor(L.src);
+  $("#app").innerHTML = `
+    <div class="stats">
+      <div class="card stat"><b>${pool.length - known - learning}</b><span>Neu</span></div>
+      <div class="card stat"><b style="color:var(--gold)">${learning}</b><span>Am Lernen</span></div>
+      <div class="card stat"><b style="color:var(--ok)">${known}</b><span>Sicher</span></div>
+    </div>
+    <div class="sec">Neue Runde</div>
+    <div class="card" style="padding:16px">
+      <div class="field"><label>Inhalt</label>
+        <div class="seg">${[["all","Alles"],["phrases","Sätze"],["words","Wörter"]].map(([k,t]) => `<button data-src="${k}" class="${L.src === k ? "on" : ""}">${t}</button>`).join("")}</div></div>
+      ${cats.length ? `<div class="field"><label>Thema</label><select id="cat"><option>Alle</option>${cats.map(c => `<option ${c === L.cat ? "selected" : ""}>${esc(c)}</option>`).join("")}</select></div>` : ""}
+      <div class="field"><label>Übungsart</label>
+        <div class="seg">${[["mix","Mix"],["choice","Auswählen"],["type","Schreiben"]].map(([k,t]) => `<button data-type="${k}" class="${L.type === k ? "on" : ""}">${t}</button>`).join("")}</div></div>
+      <p class="muted" style="margin:0 0 14px">10 Fragen · Richtung ${deFirst() ? "Deutsch → Spanisch" : "Spanisch → Deutsch"} (oben umschaltbar). Schwache und neue Einträge kommen zuerst.</p>
+      <button class="btn primary" id="start" style="width:100%">Los geht's</button>
+    </div>
+    <button class="reset" id="reset">Lernfortschritt zurücksetzen</button>`;
+
+  document.querySelectorAll("[data-src]").forEach(b => b.onclick = () => { L.src = b.dataset.src; L.cat = "Alle"; render(); });
+  document.querySelectorAll("[data-type]").forEach(b => b.onclick = () => { L.type = b.dataset.type; render(); });
+  const sel = $("#cat"); if (sel) sel.onchange = () => { L.cat = sel.value; render(); };
+  $("#start").onclick = () => startRound(pool);
+  $("#reset").onclick = () => { if (confirm("Gesamten Lernfortschritt löschen?")) { store.prog = {}; save(); render(); } };
+}
+
+function startRound(pool, fixed){
+  const picked = fixed || shuffle(pool).sort((a, b) => box(a.id) - box(b.id)).slice(0, 10);
+  const qs = shuffle(picked).map(it => {
+    let type = view.learn.type;
+    if (type === "mix") type = (box(it.id) >= 2 && Math.random() < .6) ? "type" : "choice";
+    return {it, type, answered: false, ok: null};
+  });
+  view.learn.round = {qs, i: 0, done: false, pool};
+  render();
+}
+
+function optionsFor(it){
+  const same = ITEMS.filter(x => x.kind === it.kind && x.id !== it.id);
+  const sameCat = shuffle(same.filter(x => x.cat === it.cat));
+  const other = shuffle(same.filter(x => x.cat !== it.cat));
+  const seenAns = new Set([answerOf(it)]);
+  const out = [];
+  for (const x of [...sameCat, ...other]){
+    const a = answerOf(x); if (seenAns.has(a)) continue;
+    seenAns.add(a); out.push(a); if (out.length === 3) break;
+  }
+  return shuffle([answerOf(it), ...out]);
+}
+
+function renderQuestion(){
+  const R = view.learn.round, q = R.qs[R.i], it = q.it;
+  if (!q.opts && q.type === "choice") q.opts = optionsFor(it);
+  const esPrompt = !deFirst();
+  let h = `<div class="row between"><span class="muted">Frage ${R.i + 1} von ${R.qs.length}</span><button class="btn small" id="quit">Beenden</button></div>
+    <div class="bar"><i style="width:${(R.i / R.qs.length) * 100}%"></i></div>
+    <div class="card flash" style="min-height:170px">
+      <span class="lang">${esPrompt ? "ESPAÑOL" : "DEUTSCH"} → ${esPrompt ? "DEUTSCH" : "ESPAÑOL"}</span>
+      ${esPrompt || q.answered ? `<button class="speak" data-say="${esc(it.es)}" aria-label="Anhören">${SPK}</button>` : ""}
+      <div class="q">${esc(promptOf(it))}</div>
+    </div>`;
+
+  if (q.type === "choice"){
+    h += `<div class="opts">${q.opts.map((o, k) => {
+      let cls = "";
+      if (q.answered){ if (o === answerOf(it)) cls = "right"; else if (o === q.pick) cls = "wrong"; }
+      return `<button class="opt ${cls}" data-k="${k}" ${q.answered ? "disabled" : ""}>${esc(o)}</button>`;
+    }).join("")}</div>`;
+  } else {
+    h += `<input class="answer" id="ans" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${deFirst() ? "Auf Spanisch …" : "Auf Deutsch …"}" value="${esc(q.input || "")}" ${q.answered ? "disabled" : ""}>`;
+    if (deFirst() && !q.answered) h += `<div class="keys">${["á","é","í","ó","ú","ñ","ü","¿","¡"].map(c => `<button data-key="${c}">${c}</button>`).join("")}</div>`;
+    if (!q.answered) h += `<div class="row" style="margin-top:12px"><button class="btn" id="skip">Weiß ich nicht</button><button class="btn primary" id="chk">Prüfen</button></div>`;
+  }
+
+  if (q.answered){
+    const msg = q.ok ? (q.accent ? "Richtig – achte auf die Akzente:" : "¡Muy bien! Richtig.") : "Leider falsch. Richtig ist:";
+    h += `<div class="fb ${q.ok ? "ok" : "bad"}">${msg}${(!q.ok || q.accent || q.type === "type") ? `<span class="sol">${esc(answerOf(it))}</span>` : ""}${it.note ? `<div class="note">${esc(it.note)}</div>` : ""}</div>
+      <div class="row" style="margin-top:12px"><button class="btn primary" id="nxt">${R.i + 1 < R.qs.length ? "Weiter" : "Ergebnis"}</button></div>`;
+  }
+  $("#app").innerHTML = h;
+  bindSpeak();
+
+  const finish = (ok, extra) => {
+    Object.assign(q, {answered: true, ok}, extra || {});
+    mark(it.id, ok); render();
+    speak(it.es);
+  };
+  $("#quit").onclick = () => { view.learn.round = null; render(); };
+  if (!q.answered){
+    if (q.type === "choice"){
+      document.querySelectorAll("[data-k]").forEach(b => b.onclick = () => {
+        const pick = q.opts[+b.dataset.k]; finish(pick === answerOf(it), {pick});
+      });
+    } else {
+      const inp = $("#ans");
+      setTimeout(() => inp.focus(), 50);
+      const doCheck = () => {
+        q.input = inp.value;
+        const r = check(inp.value, answerOf(it));
+        if (r === "empty") { inp.focus(); return; }
+        finish(r !== "bad", {accent: r === "accent"});
+      };
+      inp.onkeydown = e => { if (e.key === "Enter") doCheck(); };
+      inp.oninput = () => { q.input = inp.value; };
+      $("#chk").onclick = doCheck;
+      $("#skip").onclick = () => finish(false);
+      document.querySelectorAll("[data-key]").forEach(b => b.onclick = () => {
+        const s = inp.selectionStart ?? inp.value.length, e = inp.selectionEnd ?? s;
+        inp.value = inp.value.slice(0, s) + b.dataset.key + inp.value.slice(e);
+        q.input = inp.value; inp.focus(); inp.setSelectionRange(s + 1, s + 1);
+      });
+    }
+  } else {
+    $("#nxt").onclick = () => { if (R.i + 1 < R.qs.length) R.i++; else R.done = true; render(); };
+  }
+}
+
+function renderResult(){
+  const R = view.learn.round;
+  const right = R.qs.filter(q => q.ok).length;
+  const wrong = R.qs.filter(q => !q.ok);
+  const pct = right / R.qs.length;
+  const msg = pct === 1 ? "¡Perfecto! 🎉" : pct >= .7 ? "¡Muy bien!" : pct >= .4 ? "¡Bien! Weiter so." : "¡Ánimo! Übung macht den Meister.";
+  $("#app").innerHTML = `
+    <div class="card" style="padding:22px 18px;text-align:center">
+      <div class="muted">Ergebnis</div>
+      <div class="big">${right}/${R.qs.length}</div>
+      <div style="font-weight:600;margin-top:4px">${msg}</div>
+    </div>
+    ${wrong.length ? `<div class="sec">Nochmal anschauen</div><div class="list">${wrong.map(q => `
+      <div class="card item"><div class="t"><div class="es">${esc(q.it.es)}</div><div class="de">${esc(q.it.de)}</div></div>
+      <button class="speak" data-say="${esc(q.it.es)}" aria-label="Anhören">${SPK}</button></div>`).join("")}</div>` : ""}
+    <div class="row" style="margin-top:16px">
+      ${wrong.length ? `<button class="btn" id="retry">Fehler üben</button>` : ""}
+      <button class="btn primary" id="again">Neue Runde</button>
+    </div>
+    <div class="row" style="margin-top:8px"><button class="btn" id="back">Zur Übersicht</button></div>`;
+  bindSpeak();
+  const retry = $("#retry"); if (retry) retry.onclick = () => startRound(R.pool, wrong.map(q => q.it));
+  $("#again").onclick = () => startRound(R.pool);
+  $("#back").onclick = () => { view.learn.round = null; render(); };
+}
+
+/* ---------- Haupt-Render ---------- */
+function render(){
+  $("#dirBtn").innerHTML = deFirst() ? "DE <b>→</b> ES" : "ES <b>→</b> DE";
+  document.querySelectorAll("nav button").forEach(b => b.classList.toggle("on", b.dataset.tab === view.tab));
+  if (view.tab === "learn") renderLearn(); else renderBrowse(view.tab);
+}
+$("#dirBtn").onclick = () => {
+  store.dir = deFirst() ? "es-de" : "de-es"; save();
+  const R = view.learn.round; if (R && !R.done) { R.qs.forEach(q => { q.opts = null; }); }
+  view.browse.phrases.flipped = view.browse.words.flipped = false;
+  render();
+};
+document.querySelectorAll("nav button").forEach(b => b.onclick = () => { view.tab = b.dataset.tab; render(); window.scrollTo(0, 0); });
+render();
+</script>
+</body>
+</html>
