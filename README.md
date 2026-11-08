@@ -19,5 +19,5 @@ Die App einmal mit Internet öffnen, danach läuft sie auch offline.
 
 ## Änderungen
 
-Nach Änderungen an der App in `sw.js` die Versionsnummer (`spanisch-v1`) erhöhen,
+Nach Änderungen an der App in `sw.js` die Versionsnummer (`spanisch-v2`) erhöhen,
 damit installierte Apps die neue Version laden.

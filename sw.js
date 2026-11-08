@@ -1,6 +1,6 @@
 // Speichert die App auf dem Gerät, damit sie offline läuft.
 // Bei Änderungen an der App die Versionsnummer erhöhen.
-const CACHE = "spanisch-v1";
+const CACHE = "spanisch-v2";
 const FILES = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-512.png"];
 
 self.addEventListener("install", e => {
